@@ -1,5 +1,8 @@
 import os
 import json
+from flask import Flask, render_template
+
+app = Flask(__name__)
 
 def listar_arquivos(diretorio):
     # Lista para armazenar os caminhos dos arquivos e suas categorias
@@ -21,28 +24,27 @@ def listar_arquivos(diretorio):
             parts = relative_path.split(os.sep)
             category = parts[0].capitalize() if len(parts) > 1 else ""
 
-            # Extrai o product_name a partir do nome do arquivo
-            product_name = ""
-            if "-icon-service-" in file:
-                product_name = file.split("-icon-service-")[1].replace(".svg", "").replace("-", " ")
-            
-            # Adiciona o caminho, categoria e product_name à lista
+            # Adiciona o caminho, categoria e nome do arquivo à lista
             caminhos_dos_arquivos.append({
-                "folder": caminho_completo,
+                "folder": os.path.join("/", diretorio, relative_path).replace("\\", "/"),  # Corrige o caminho para ser acessível a partir do HTML
                 "category": category,
-                "product_name": product_name
+                "product_name": file.split("-icon-service-")[1].replace(".svg", "").replace("-", " ") if "-icon-service-" in file else ""
             })
 
     return caminhos_dos_arquivos
 
-# Define o diretório inicial
-diretorio_inicial = 'Icons'
+# Define a rota para renderizar o template HTML
+@app.route('/')
+def index():
+    # Define o diretório inicial
+    diretorio_inicial = 'Icons'
+    
+    # Chama a função para listar arquivos
+    produtos = listar_arquivos(diretorio_inicial)
 
-# Chama a função para listar arquivos
-caminhos_dos_arquivos = listar_arquivos(diretorio_inicial)
+    # Renderiza o template HTML com a lista de produtos
+    return render_template('index.html', products=produtos)
 
-# Salva a lista de caminhos dos arquivos em um arquivo JSON
-with open('products.json', 'w') as json_file:
-    json.dump(caminhos_dos_arquivos, json_file, indent=4)
-
-print("Caminhos dos arquivos salvos em 'caminhos_dos_arquivos.json'")
+if __name__ == "__main__":
+    # Executa a aplicação Flask
+    app.run(debug=True, port=5001)

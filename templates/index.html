@@ -21,32 +21,29 @@
     </header>
     <section class="section">
       <div class="container">
-        <div>
-          <table class="table is-fullwidth is-striped">
-            <thead>
-              <tr>
-                <th>Icon</th>
-                <th>Category</th>
-                <th>Product Name</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for product in products |sort(attribute="category")  %}
-              <tr>
-                <td class="has-text-centered">
-                  <img src="{{ product.folder }}" alt="{{ product.product_name }}" width="50" height="50">
-                </td>
-                <td>
-                  {{ product.category }}
-                </td>
-                <td>
-                  {{ product.product_name }}
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+        {% for category, products in products_by_category.items() %}
+        <h2 class="is-size-3">{{ category }}</h2>
+        <table class="table is-fullwidth is-striped">
+          <thead>
+            <tr>
+              <th>Icon</th>
+              <th>Product Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+              <td class="has-text-centered">
+                <img src="{{ product.folder }}" alt="{{ product.product_name }}" width="40" height="40" />
+              </td>
+              <td>
+                {{ product.product_name }}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% endfor %}
       </div>
     </section>
   </div>
