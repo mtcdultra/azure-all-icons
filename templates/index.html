@@ -6,6 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
   <title>Products Viewer</title>
+  <style>
+    .product-box {
+      border: 1px solid gray;
+      padding: 10px;
+      text-align: center;
+      margin: 10px;
+    }
+    .product-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -14,35 +27,25 @@
       <div class="container">
         <div class="hero is-info is-bold">
           <div class="hero-body">
-            <h1 class="is-size-1">Products</h1>
+            <h1 class="is-size-1">Azure Resources</h1>
           </div>
         </div>
       </div>
     </header>
     <section class="section">
       <div class="container">
-        {% for category, products in products_by_category.items() %}
+        {% for category in products_by_category.keys() | sort %}
         <h2 class="is-size-3">{{ category }}</h2>
-        <table class="table is-fullwidth is-striped">
-          <thead>
-            <tr>
-              <th>Icon</th>
-              <th>Product Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for product in products %}
-            <tr>
-              <td class="has-text-centered">
-                <img src="{{ product.folder }}" alt="{{ product.product_name }}" width="40" height="40" />
-              </td>
-              <td>
-                {{ product.product_name }}
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+        <div class="columns is-multiline">
+          {% for product in products_by_category[category] | sort(attribute='product_name') %}
+          <div class="column is-one-quarter">
+            <div class="product-box">
+              <img src="{{ product.folder }}" alt="{{ product.product_name }}" class="product-icon" />
+              <div>{{ product.product_name }}</div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
         {% endfor %}
       </div>
     </section>
