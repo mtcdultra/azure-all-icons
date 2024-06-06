@@ -8,7 +8,6 @@
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
   <title>Products Viewer</title>
-  
 </head>
 
 <body>
@@ -17,7 +16,7 @@
       <div class="container">
         <div class="hero is-info is-bold">
           <div class="hero-body">
-            <h1 class="is-size-1">Products</h1>
+            <h1 class="is-size-1">Azure Resources</h1>
           </div>
         </div>
       </div>
@@ -25,8 +24,8 @@
     <section class="section">
       <div class="container">
         {% for category, products in products_by_category.items() %}
-        <h2 class="is-size-4">{{ category }}</h2>
-        <table class="table table-striped">
+        <h2 class="is-size-3">{{ category }}</h2>
+        <table class="table is-fullwidth is-striped">
           <thead>
             <tr>
               <th>Icon</th>
@@ -36,10 +35,10 @@
           <tbody>
             {% for product in products %}
             <tr>
-              <td>
+              <td class="has-text-centered">
                 <img src="{{ product.folder }}" alt="{{ product.product_name }}" width="40" height="40" />
               </td>
-              <td class="align-middle">
+              <td>
                 {{ product.product_name }}
               </td>
             </tr>
