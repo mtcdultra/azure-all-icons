@@ -5,7 +5,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
   <title>Products Viewer</title>
+  
 </head>
 
 <body>
@@ -22,8 +25,8 @@
     <section class="section">
       <div class="container">
         {% for category, products in products_by_category.items() %}
-        <h2 class="is-size-3">{{ category }}</h2>
-        <table class="table is-fullwidth is-striped">
+        <h2 class="is-size-4">{{ category }}</h2>
+        <table class="table table-striped">
           <thead>
             <tr>
               <th>Icon</th>
@@ -33,10 +36,10 @@
           <tbody>
             {% for product in products %}
             <tr>
-              <td class="has-text-centered">
+              <td>
                 <img src="{{ product.folder }}" alt="{{ product.product_name }}" width="40" height="40" />
               </td>
-              <td>
+              <td class="align-middle">
                 {{ product.product_name }}
               </td>
             </tr>

@@ -4,19 +4,21 @@ from collections import defaultdict
 
 app = Flask(__name__)
 
-@app.route('/')
+
+@app.route("/")
 def index():
     # Carregar o arquivo JSON
-    with open('products.json') as f:
+    with open("products.json") as f:
         data = json.load(f)
-    
+
     # Organizar os produtos por categoria
     products_by_category = defaultdict(list)
     for product in data:
-        products_by_category[product['category']].append(product)
-    
-    # Passar os dados para o template
-    return render_template('index.html', products_by_category=products_by_category)
+        products_by_category[product["category"]].append(product)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+    # Passar os dados para o template
+    return render_template("index.html", products_by_category=products_by_category)
+
+
+if __name__ == "__main__":
+    app.run(debug=True, port=5001)
