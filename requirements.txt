@@ -1,2 +1,2 @@
-flask
-collections 
+Flask==3.0.3
+python-collection==1.0.0
